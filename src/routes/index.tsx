@@ -1,26 +1,307 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import stillStreet from "@/assets/still-street.jpg";
+import stillPortrait from "@/assets/still-portrait.jpg";
+import stillEstate from "@/assets/still-estate.jpg";
+import stillBlade from "@/assets/still-blade.jpg";
+import stillBts from "@/assets/still-bts.jpg";
+import stillDuo from "@/assets/still-duo.jpg";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
+export const Route = createFileRoute("/")({ component: Index });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+const VIDEO_ID = "jJRNTFBZPOw";
+const RELEASE = new Date("2026-06-19T00:00:00Z");
+
+function useCountdown() {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const diff = Math.max(0, RELEASE.getTime() - now);
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff / 3600000) % 24);
+  const m = Math.floor((diff / 60000) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  return { d, h, m, s };
+}
+
+function Nav() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border/40">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
+        <a href="#top" className="font-display text-2xl tracking-wider">
+          SWORD<span className="text-primary">PLAY</span>
+        </a>
+        <nav className="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <a href="#trailer" className="hover:text-foreground transition">Trailer</a>
+          <a href="#story" className="hover:text-foreground transition">Story</a>
+          <a href="#cast" className="hover:text-foreground transition">Cast</a>
+          <a href="#watch" className="hover:text-foreground transition">Watch</a>
+        </nav>
+        <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer"
+           className="text-xs uppercase tracking-[0.2em] border border-foreground/30 px-4 py-2 hover:bg-foreground hover:text-background transition">
+          @swordplayfilm
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function Hero() {
+  const { d, h, m, s } = useCountdown();
+  return (
+    <section id="top" className="relative h-[100svh] w-full overflow-hidden">
+      {/* YouTube loop — muted, playsinline for Safari/iOS */}
+      <div className="absolute inset-0 pointer-events-none">
+        <iframe
+          title="Swordplay trailer loop"
+          src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&disablekb=1`}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          frameBorder={0}
+          className="absolute top-1/2 left-1/2 w-[177.78vh] h-[100svh] min-w-full min-h-[56.25vw] -translate-x-1/2 -translate-y-1/2"
+        />
+      </div>
+
+      {/* gradient + grain */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background" />
+      <div className="absolute inset-0 grain" />
+
+      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-10">
+        <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          Now in post — streaming June 19, 2026
+        </div>
+
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">A Femi Wilhelm Film</p>
+          <h1 className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] leading-[0.85] tracking-tight">
+            SWORD<br />
+            <span className="text-stroke">PLAY</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-base md:text-lg text-foreground/80">
+            Two best friends. One Deptford backstreet. Loyalty, jealousy, and the kind of betrayal Shakespeare wrote about.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href={`https://www.youtube.com/watch?v=${VIDEO_ID}`} target="_blank" rel="noreferrer"
+               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-primary/90 transition">
+              ▶ Watch trailer
+            </a>
+            <a href="#watch"
+               className="inline-flex items-center gap-2 border border-foreground/40 px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-foreground hover:text-background transition">
+              Where to watch
+            </a>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="flex gap-4 md:gap-6 font-display">
+            {[{l:"Days",v:d},{l:"Hrs",v:h},{l:"Min",v:m},{l:"Sec",v:s}].map(({l,v}) => (
+              <div key={l} className="text-center">
+                <div className="text-3xl md:text-5xl tabular-nums">{String(v).padStart(2,"0")}</div>
+                <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-1">{l}</div>
+              </div>
+            ))}
+          </div>
+          <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground hidden md:block">
+            Scroll ↓
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const items = ["June 19 · 2026", "Amazon Prime Video", "Fandango at Home", "A Femi Wilhelm Film", "Buffalo 8 · BondIt Media"];
+  return (
+    <div className="border-y border-border/60 py-5 overflow-hidden bg-background">
+      <div className="flex gap-12 marquee whitespace-nowrap font-display text-2xl md:text-3xl">
+        {[...items, ...items, ...items, ...items].map((t, i) => (
+          <span key={i} className="flex items-center gap-12 text-foreground/80">
+            {t} <span className="text-primary">✦</span>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
 
+function Bento({ image, span, eyebrow, title, body, href, cta, big = false }: {
+  image?: string; span: string; eyebrow?: string; title: string; body?: string; href?: string; cta?: string; big?: boolean;
+}) {
+  const Tag = href ? "a" : "div";
+  return (
+    <Tag
+      {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: "noreferrer" } : {})}
+      className={`group relative ${span} overflow-hidden rounded-md border border-border/60 bg-card min-h-[260px] flex flex-col justify-end p-6 md:p-8 transition hover:border-primary/60`}
+    >
+      {image && (
+        <>
+          <img src={image} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-110 transition duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10" />
+        </>
+      )}
+      <div className="absolute inset-0 grain opacity-40" />
+      <div className="relative">
+        {eyebrow && <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3">{eyebrow}</p>}
+        <h3 className={`font-display ${big ? "text-4xl md:text-6xl" : "text-2xl md:text-3xl"} leading-none mb-3`}>{title}</h3>
+        {body && <p className="text-sm text-foreground/75 max-w-md leading-relaxed">{body}</p>}
+        {cta && (
+          <span className="inline-flex items-center gap-2 mt-4 text-xs uppercase tracking-[0.25em] text-foreground border-b border-primary pb-1">
+            {cta} →
+          </span>
+        )}
+      </div>
+    </Tag>
+  );
+}
+
+function BentoGrid() {
+  return (
+    <section id="story" className="relative px-6 lg:px-12 py-24">
+      <div className="max-w-[1600px] mx-auto">
+        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">The Film</p>
+            <h2 className="font-display text-5xl md:text-7xl leading-none">An Othello<br/>for the ends.</h2>
+          </div>
+          <p className="max-w-md text-foreground/70">
+            In Deptford, London, best friends Ringo and Kid are pulled into a brutal gang rivalry — a tense story of loyalty, jealousy, and betrayal that ends in devastating downfall.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-12 auto-rows-[180px] md:auto-rows-[220px] gap-4">
+          <Bento span="col-span-12 md:col-span-7 md:row-span-2" image={stillStreet} eyebrow="Synopsis" title="DEPTFORD, after dark." body="Two friends. One rivalry. A code that breaks before the credits roll. Inspired by Shakespeare's Othello, recast on the streets of South East London." big />
+          <Bento span="col-span-6 md:col-span-5" image={stillBlade} eyebrow="Genre" title="Crime · Drama" />
+          <Bento span="col-span-6 md:col-span-5" image={stillEstate} eyebrow="Setting" title="South London" body="Concrete towers, neon corner shops, the quiet before everything kicks off." />
+
+          <Bento span="col-span-12 md:col-span-4" image={stillPortrait} eyebrow="Lead" title="Peter Silva" body="As Ringo. Previously seen in Tapped." />
+          <Bento span="col-span-6 md:col-span-4" image={stillDuo} eyebrow="Lead" title="Simon Howard" body="As Kid. Attack the Block." />
+          <Bento span="col-span-6 md:col-span-4" image={stillBts} eyebrow="Featuring" title="BackRoad Gee" body="The Kitchen." />
+
+          <Bento span="col-span-12 md:col-span-5" eyebrow="Director" title="Femi Wilhelm" body="A defiant new voice in British crime drama, translating the bard's tragedies into the language of the ends." />
+          <Bento
+            span="col-span-12 md:col-span-7"
+            image={stillBts}
+            eyebrow="Behind the lens"
+            title="Made on the block."
+            body="Shot on location across South East London with a cast and crew rooted in the world the film depicts."
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Trailer() {
+  return (
+    <section id="trailer" className="relative px-6 lg:px-12 py-24 border-t border-border/60">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
+          <h2 className="font-display text-5xl md:text-7xl leading-none">Official trailer</h2>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">01:27 · 4K</p>
+        </div>
+        <div className="relative aspect-video w-full overflow-hidden rounded-md border border-border bg-black">
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?rel=0&modestbranding=1&playsinline=1`}
+            title="Swordplay Volume One — Official Trailer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Cast() {
+  const cast = [
+    { name: "Peter Silva", role: "Ringo", credit: "Tapped", img: stillPortrait },
+    { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: stillDuo },
+    { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen", img: stillStreet },
+  ];
+  return (
+    <section id="cast" className="px-6 lg:px-12 py-24 border-t border-border/60">
+      <div className="max-w-[1600px] mx-auto">
+        <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Cast</p>
+        <h2 className="font-display text-5xl md:text-7xl leading-none mb-12">The faces of the fall.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {cast.map((c) => (
+            <article key={c.name} className="relative aspect-[3/4] overflow-hidden rounded-md group bg-card">
+              <img src={c.img} alt={c.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-primary mb-2">{c.role}</p>
+                <h3 className="font-display text-3xl md:text-4xl">{c.name}</h3>
+                <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">{c.credit}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Watch() {
+  return (
+    <section id="watch" className="px-6 lg:px-12 py-24 border-t border-border/60">
+      <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Where to watch</p>
+          <h2 className="font-display text-6xl md:text-8xl leading-[0.9]">06.19<br/><span className="text-primary">2026</span></h2>
+          <p className="mt-6 max-w-md text-foreground/75">Streaming worldwide on Amazon Prime Video and Fandango at Home. Set a reminder, gather the team, lock the door.</p>
+        </div>
+        <div className="grid gap-3">
+          {[
+            { name: "Amazon Prime Video", note: "Stream", href: "https://www.amazon.com/" },
+            { name: "Fandango at Home", note: "Rent / Buy", href: "https://athome.fandango.com/" },
+            { name: "Instagram", note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
+          ].map((p) => (
+            <a key={p.name} href={p.href} target="_blank" rel="noreferrer"
+               className="flex items-center justify-between border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40">
+              <div>
+                <div className="font-display text-2xl">{p.name}</div>
+                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">{p.note}</div>
+              </div>
+              <span className="text-primary group-hover:translate-x-1 transition">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="px-6 lg:px-12 py-12 border-t border-border/60">
+      <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-6 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+        <div className="font-display text-2xl tracking-wider text-foreground">SWORD<span className="text-primary">PLAY</span></div>
+        <div>© 2026 Buffalo 8 / BondIt Media Capital. All rights reserved.</div>
+        <div className="flex gap-5">
+          <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
+          <a href={`https://www.youtube.com/watch?v=${VIDEO_ID}`} target="_blank" rel="noreferrer" className="hover:text-foreground">YouTube</a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <main className="relative">
+      <Nav />
+      <Hero />
+      <Marquee />
+      <BentoGrid />
+      <Trailer />
+      <Cast />
+      <Watch />
+      <Footer />
+    </main>
+  );
 }
