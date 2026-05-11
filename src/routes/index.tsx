@@ -1,11 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import stillStreet from "@/assets/still-street.jpg";
 import stillPortrait from "@/assets/still-portrait.jpg";
 import stillEstate from "@/assets/still-estate.jpg";
 import stillBlade from "@/assets/still-blade.jpg";
 import stillBts from "@/assets/still-bts.jpg";
 import stillDuo from "@/assets/still-duo.jpg";
+import simonHoward from "@/assets/cast/simon-howard.jpg";
+import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
+import backroadGee2 from "@/assets/cast/backroad-gee-2.jpg";
+import backroadGee3 from "@/assets/cast/backroad-gee-3.jpg";
 
 export const Route = createFileRoute("/")({ component: Index });
 
@@ -13,17 +25,19 @@ const VIDEO_ID = "jJRNTFBZPOw";
 const RELEASE = new Date("2026-06-19T00:00:00Z");
 
 function useCountdown() {
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
+  if (now === null) return { d: 0, h: 0, m: 0, s: 0, ready: false };
   const diff = Math.max(0, RELEASE.getTime() - now);
   const d = Math.floor(diff / 86400000);
   const h = Math.floor((diff / 3600000) % 24);
   const m = Math.floor((diff / 60000) % 60);
   const s = Math.floor((diff / 1000) % 60);
-  return { d, h, m, s };
+  return { d, h, m, s, ready: true };
 }
 
 function Nav() {
@@ -40,7 +54,7 @@ function Nav() {
           <a href="#watch" className="hover:text-foreground transition">Watch</a>
         </nav>
         <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer"
-           className="text-xs uppercase tracking-[0.2em] border border-foreground/30 px-4 py-2 hover:bg-foreground hover:text-background transition">
+           className="text-xs uppercase tracking-[0.2em] border border-foreground/30 px-4 py-2 hover:bg-foreground hover:text-background transition rounded-full">
           @swordplayfilm
         </a>
       </div>
@@ -49,10 +63,9 @@ function Nav() {
 }
 
 function Hero() {
-  const { d, h, m, s } = useCountdown();
+  const { d, h, m, s, ready } = useCountdown();
   return (
     <section id="top" className="relative h-[100svh] w-full overflow-hidden">
-      {/* YouTube loop — muted, playsinline for Safari/iOS */}
       <div className="absolute inset-0 pointer-events-none">
         <iframe
           title="Swordplay trailer loop"
@@ -63,11 +76,10 @@ function Hero() {
         />
       </div>
 
-      {/* gradient + grain */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background" />
       <div className="absolute inset-0 grain" />
 
-      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-10">
+      <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           Now in post — streaming June 19, 2026
@@ -85,27 +97,35 @@ function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a href={`https://www.youtube.com/watch?v=${VIDEO_ID}`} target="_blank" rel="noreferrer"
-               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-primary/90 transition">
+               className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-primary/90 transition rounded-full">
               ▶ Watch trailer
             </a>
             <a href="#watch"
-               className="inline-flex items-center gap-2 border border-foreground/40 px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-foreground hover:text-background transition">
+               className="inline-flex items-center gap-2 border border-foreground/40 px-6 py-3.5 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-foreground hover:text-background transition rounded-full">
               Where to watch
             </a>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="flex gap-4 md:gap-6 font-display">
-            {[{l:"Days",v:d},{l:"Hrs",v:h},{l:"Min",v:m},{l:"Sec",v:s}].map(({l,v}) => (
-              <div key={l} className="text-center">
-                <div className="text-3xl md:text-5xl tabular-nums">{String(v).padStart(2,"0")}</div>
-                <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-1">{l}</div>
+        {/* Countdown — given its own breathing room */}
+        <div className="mt-10 md:mt-16">
+          <div className="flex flex-wrap items-end justify-between gap-8">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4">Counting down to release</p>
+              <div className="flex gap-6 md:gap-10 font-display">
+                {[{l:"Days",v:d},{l:"Hrs",v:h},{l:"Min",v:m},{l:"Sec",v:s}].map(({l,v}) => (
+                  <div key={l} className="text-center">
+                    <div className="text-4xl md:text-6xl tabular-nums leading-none">
+                      {ready ? String(v).padStart(2,"0") : "--"}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-3">{l}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground hidden md:block">
-            Scroll ↓
+            </div>
+            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground hidden md:block pb-2">
+              Scroll ↓
+            </div>
           </div>
         </div>
       </div>
@@ -135,7 +155,7 @@ function Bento({ image, span, eyebrow, title, body, href, cta, big = false }: {
   return (
     <Tag
       {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: "noreferrer" } : {})}
-      className={`group relative ${span} overflow-hidden rounded-md border border-border/60 bg-card min-h-[260px] flex flex-col justify-end p-6 md:p-8 transition hover:border-primary/60`}
+      className={`group relative ${span} overflow-hidden rounded-2xl border border-border/60 bg-card min-h-[240px] flex flex-col justify-end p-6 md:p-8 transition hover:border-primary/60`}
     >
       {image && (
         <>
@@ -160,9 +180,9 @@ function Bento({ image, span, eyebrow, title, body, href, cta, big = false }: {
 
 function BentoGrid() {
   return (
-    <section id="story" className="relative px-6 lg:px-12 py-24">
+    <section id="story" className="relative px-4 sm:px-6 lg:px-12 py-20 md:py-28">
       <div className="max-w-[1600px] mx-auto">
-        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+        <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">The Film</p>
             <h2 className="font-display text-5xl md:text-7xl leading-none">An Othello<br/>for the ends.</h2>
@@ -172,18 +192,14 @@ function BentoGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-12 auto-rows-[180px] md:auto-rows-[220px] gap-4">
-          <Bento span="col-span-12 md:col-span-7 md:row-span-2" image={stillStreet} eyebrow="Synopsis" title="DEPTFORD, after dark." body="Two friends. One rivalry. A code that breaks before the credits roll. Inspired by Shakespeare's Othello, recast on the streets of South East London." big />
-          <Bento span="col-span-6 md:col-span-5" image={stillBlade} eyebrow="Genre" title="Crime · Drama" />
-          <Bento span="col-span-6 md:col-span-5" image={stillEstate} eyebrow="Setting" title="South London" body="Concrete towers, neon corner shops, the quiet before everything kicks off." />
+        <div className="grid grid-cols-2 md:grid-cols-12 auto-rows-[200px] md:auto-rows-[240px] gap-3 md:gap-5">
+          <Bento span="col-span-2 md:col-span-7 md:row-span-2" image={stillStreet} eyebrow="Synopsis" title="DEPTFORD, after dark." body="Two friends. One rivalry. A code that breaks before the credits roll. Inspired by Shakespeare's Othello, recast on the streets of South East London." big />
+          <Bento span="col-span-2 md:col-span-5" image={stillBlade} eyebrow="Genre" title="Crime · Drama" body="A modern British tragedy with the pulse of a thriller." />
+          <Bento span="col-span-2 md:col-span-5" image={stillEstate} eyebrow="Setting" title="South London" body="Concrete towers, neon corner shops, the quiet before everything kicks off." />
 
-          <Bento span="col-span-12 md:col-span-4" image={stillPortrait} eyebrow="Lead" title="Peter Silva" body="As Ringo. Previously seen in Tapped." />
-          <Bento span="col-span-6 md:col-span-4" image={stillDuo} eyebrow="Lead" title="Simon Howard" body="As Kid. Attack the Block." />
-          <Bento span="col-span-6 md:col-span-4" image={stillBts} eyebrow="Featuring" title="BackRoad Gee" body="The Kitchen." />
-
-          <Bento span="col-span-12 md:col-span-5" eyebrow="Director" title="Femi Wilhelm" body="A defiant new voice in British crime drama, translating the bard's tragedies into the language of the ends." />
+          <Bento span="col-span-2 md:col-span-5" eyebrow="Director" title="Femi Wilhelm" body="A defiant new voice in British crime drama, translating the bard's tragedies into the language of the ends." />
           <Bento
-            span="col-span-12 md:col-span-7"
+            span="col-span-2 md:col-span-7"
             image={stillBts}
             eyebrow="Behind the lens"
             title="Made on the block."
@@ -197,13 +213,13 @@ function BentoGrid() {
 
 function Trailer() {
   return (
-    <section id="trailer" className="relative px-6 lg:px-12 py-24 border-t border-border/60">
+    <section id="trailer" className="relative px-4 sm:px-6 lg:px-12 py-20 md:py-24 border-t border-border/60">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
           <h2 className="font-display text-5xl md:text-7xl leading-none">Official trailer</h2>
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">01:27 · 4K</p>
         </div>
-        <div className="relative aspect-video w-full overflow-hidden rounded-md border border-border bg-black">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black">
           <iframe
             className="absolute inset-0 w-full h-full"
             src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?rel=0&modestbranding=1&playsinline=1`}
@@ -219,28 +235,44 @@ function Trailer() {
 
 function Cast() {
   const cast = [
-    { name: "Peter Silva", role: "Ringo", credit: "Tapped", img: stillPortrait },
-    { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: stillDuo },
-    { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen", img: stillStreet },
+    { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: stillPortrait },
+    { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: simonHoward },
+    { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen · UK Rap", img: backroadGee1 },
+    { name: "BackRoad Gee", role: "On set", credit: "Behind the scenes", img: backroadGee2 },
+    { name: "BackRoad Gee", role: "In character", credit: "Press shoot", img: backroadGee3 },
   ];
+  const autoplay = useRef(Autoplay({ delay: 4500, stopOnInteraction: false, stopOnMouseEnter: true }));
   return (
-    <section id="cast" className="px-6 lg:px-12 py-24 border-t border-border/60">
+    <section id="cast" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto">
         <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Cast</p>
         <h2 className="font-display text-5xl md:text-7xl leading-none mb-12">The faces of the fall.</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {cast.map((c) => (
-            <article key={c.name} className="relative aspect-[3/4] overflow-hidden rounded-md group bg-card">
-              <img src={c.img} alt={c.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-primary mb-2">{c.role}</p>
-                <h3 className="font-display text-3xl md:text-4xl">{c.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">{c.credit}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+
+        <Carousel
+          opts={{ align: "start", loop: true }}
+          plugins={[autoplay.current]}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-3 md:-ml-5">
+            {cast.map((c, i) => (
+              <CarouselItem key={i} className="pl-3 md:pl-5 basis-[80%] sm:basis-1/2 lg:basis-1/3">
+                <article className="relative aspect-[3/4] overflow-hidden rounded-2xl group bg-card">
+                  <img src={c.img} alt={c.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-xs uppercase tracking-[0.3em] text-primary mb-2">{c.role}</p>
+                    <h3 className="font-display text-3xl md:text-4xl">{c.name}</h3>
+                    <p className="text-xs text-muted-foreground mt-1 uppercase tracking-widest">{c.credit}</p>
+                  </div>
+                </article>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="hidden md:block">
+            <CarouselPrevious className="left-2 bg-background/80 border-border" />
+            <CarouselNext className="right-2 bg-background/80 border-border" />
+          </div>
+        </Carousel>
       </div>
     </section>
   );
@@ -248,7 +280,7 @@ function Cast() {
 
 function Watch() {
   return (
-    <section id="watch" className="px-6 lg:px-12 py-24 border-t border-border/60">
+    <section id="watch" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Where to watch</p>
@@ -262,7 +294,7 @@ function Watch() {
             { name: "Instagram", note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
           ].map((p) => (
             <a key={p.name} href={p.href} target="_blank" rel="noreferrer"
-               className="flex items-center justify-between border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40">
+               className="flex items-center justify-between border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40 rounded-2xl">
               <div>
                 <div className="font-display text-2xl">{p.name}</div>
                 <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">{p.note}</div>
