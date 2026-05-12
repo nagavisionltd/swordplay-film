@@ -83,7 +83,9 @@ function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Coming to Amazon Prime Video — June 19, 2026
+          <span>Coming to</span>
+          <PrimeLogo />
+          <span>— June 19, 2026</span>
         </div>
 
         <div>
