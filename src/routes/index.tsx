@@ -234,7 +234,7 @@ function Trailer() {
 
 function Cast() {
   const cast = [
-    { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: stillPortrait },
+    { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: peterSilva },
     { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: simonHoward },
     { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen · UK Rap", img: backroadGee1 },
   ];
