@@ -83,7 +83,9 @@ function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Coming to Amazon Prime Video — June 19, 2026
+          <span>Coming to</span>
+          <PrimeLogo />
+          <span>— June 19, 2026</span>
         </div>
 
         <div>
@@ -340,7 +342,7 @@ function Footer() {
     <footer className="px-6 lg:px-12 py-12 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-6 text-xs uppercase tracking-[0.25em] text-muted-foreground">
         <img src={swordplayLogo} alt="Swordplay" className="h-6 w-auto" />
-        <div>© 2026 Buffalo 8 / BondIt Media Capital. All rights reserved.</div>
+        <div>© 2026 Femi Wilhelm. All rights reserved.</div>
         <div className="flex gap-5">
           <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
           <a href={`https://www.youtube.com/watch?v=${VIDEO_ID}`} target="_blank" rel="noreferrer" className="hover:text-foreground">YouTube</a>
