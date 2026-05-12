@@ -82,15 +82,13 @@ function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Now in post — streaming June 19, 2026
+          Coming to Amazon Prime Video — June 19, 2026
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">A Femi Wilhelm Film</p>
-          <h1 className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] leading-[0.85] tracking-tight">
-            SWORD<br />
-            <span className="text-stroke">PLAY</span>
-          </h1>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-6">A Femi Wilhelm Film</p>
+          <h1 className="sr-only">Swordplay</h1>
+          <img src={swordplayLogo} alt="Swordplay" className="w-full max-w-[900px] h-auto select-none" draggable={false} />
           <p className="mt-6 max-w-xl text-base md:text-lg text-foreground/80">
             Two best friends. One Deptford backstreet. Loyalty, jealousy, and the kind of betrayal Shakespeare wrote about.
           </p>
