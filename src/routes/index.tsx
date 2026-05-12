@@ -44,8 +44,8 @@ function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border/40">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        <a href="#top" className="font-display text-2xl tracking-wider">
-          SWORD<span className="text-primary">PLAY</span>
+        <a href="#top" className="flex items-center" aria-label="Swordplay">
+          <img src={swordplayLogo} alt="Swordplay" className="h-6 md:h-7 w-auto" />
         </a>
         <nav className="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em] text-muted-foreground">
           <a href="#trailer" className="hover:text-foreground transition">Trailer</a>
