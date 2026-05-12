@@ -16,6 +16,7 @@ import stillBts from "@/assets/still-bts.jpg";
 import stillDuo from "@/assets/still-duo.jpg";
 import simonHoward from "@/assets/cast/simon-howard.jpg";
 import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
+import peterSilva from "@/assets/cast/peter-silva.jpg";
 import swordplayLogo from "@/assets/logos/swordplay-logo.png";
 import { Instagram } from "lucide-react";
 
