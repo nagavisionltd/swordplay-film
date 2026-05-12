@@ -342,7 +342,7 @@ function Footer() {
     <footer className="px-6 lg:px-12 py-12 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-6 text-xs uppercase tracking-[0.25em] text-muted-foreground">
         <img src={swordplayLogo} alt="Swordplay" className="h-6 w-auto" />
-        <div>© 2026 Buffalo 8 / BondIt Media Capital. All rights reserved.</div>
+        <div>© 2026 Femi Wilhelm. All rights reserved.</div>
         <div className="flex gap-5">
           <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
           <a href={`https://www.youtube.com/watch?v=${VIDEO_ID}`} target="_blank" rel="noreferrer" className="hover:text-foreground">YouTube</a>
