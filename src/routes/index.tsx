@@ -16,8 +16,8 @@ import stillBts from "@/assets/still-bts.jpg";
 import stillDuo from "@/assets/still-duo.jpg";
 import simonHoward from "@/assets/cast/simon-howard.jpg";
 import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
-import backroadGee2 from "@/assets/cast/backroad-gee-2.jpg";
-import backroadGee3 from "@/assets/cast/backroad-gee-3.jpg";
+import swordplayLogo from "@/assets/logos/swordplay-logo.png";
+import { Instagram } from "lucide-react";
 
 export const Route = createFileRoute("/")({ component: Index });
 
@@ -44,8 +44,8 @@ function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/40 border-b border-border/40">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        <a href="#top" className="font-display text-2xl tracking-wider">
-          SWORD<span className="text-primary">PLAY</span>
+        <a href="#top" className="flex items-center" aria-label="Swordplay">
+          <img src={swordplayLogo} alt="Swordplay" className="h-6 md:h-7 w-auto" />
         </a>
         <nav className="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em] text-muted-foreground">
           <a href="#trailer" className="hover:text-foreground transition">Trailer</a>
@@ -82,15 +82,13 @@ function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Now in post — streaming June 19, 2026
+          Coming to Amazon Prime Video — June 19, 2026
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">A Femi Wilhelm Film</p>
-          <h1 className="font-display text-[18vw] md:text-[14vw] lg:text-[12vw] leading-[0.85] tracking-tight">
-            SWORD<br />
-            <span className="text-stroke">PLAY</span>
-          </h1>
+          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-6">A Femi Wilhelm Film</p>
+          <h1 className="sr-only">Swordplay</h1>
+          <img src={swordplayLogo} alt="Swordplay" className="w-full max-w-[900px] h-auto select-none" draggable={false} />
           <p className="mt-6 max-w-xl text-base md:text-lg text-foreground/80">
             Two best friends. One Deptford backstreet. Loyalty, jealousy, and the kind of betrayal Shakespeare wrote about.
           </p>
@@ -238,8 +236,6 @@ function Cast() {
     { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: stillPortrait },
     { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: simonHoward },
     { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen · UK Rap", img: backroadGee1 },
-    { name: "BackRoad Gee", role: "On set", credit: "Behind the scenes", img: backroadGee2 },
-    { name: "BackRoad Gee", role: "In character", credit: "Press shoot", img: backroadGee3 },
   ];
   const autoplay = useRef(Autoplay({ delay: 4500, stopOnInteraction: false, stopOnMouseEnter: true }));
   return (
@@ -278,7 +274,41 @@ function Cast() {
   );
 }
 
+function PrimeLogo() {
+  return (
+    <svg viewBox="0 0 200 48" className="h-7 md:h-8 w-auto" aria-label="Amazon Prime Video">
+      <text x="0" y="22" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" fontSize="20" letterSpacing="-0.5">prime</text>
+      <text x="62" y="22" fill="#1399FF" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" fontSize="20" letterSpacing="-0.5">video</text>
+      <path d="M2 30 Q 60 44 122 30" stroke="#FF9900" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M115 26 L 124 30 L 115 34" stroke="#FF9900" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function FandangoLogo() {
+  return (
+    <svg viewBox="0 0 220 48" className="h-7 md:h-8 w-auto" aria-label="Fandango at Home">
+      <text x="0" y="24" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontWeight="800" fontSize="22" letterSpacing="-0.5">fandango</text>
+      <text x="0" y="42" fill="#FF7300" fontFamily="Inter, system-ui, sans-serif" fontWeight="600" fontSize="11" letterSpacing="2">AT HOME</text>
+    </svg>
+  );
+}
+
+function InstaLogo() {
+  return (
+    <div className="flex items-center gap-3">
+      <Instagram className="w-7 h-7" strokeWidth={1.75} />
+      <span className="font-display text-2xl">Instagram</span>
+    </div>
+  );
+}
+
 function Watch() {
+  const platforms = [
+    { logo: <PrimeLogo />, note: "Stream worldwide", href: "https://www.amazon.com/" },
+    { logo: <FandangoLogo />, note: "Rent / Buy", href: "https://athome.fandango.com/" },
+    { logo: <InstaLogo />, note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
+  ];
   return (
     <section id="watch" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -288,18 +318,14 @@ function Watch() {
           <p className="mt-6 max-w-md text-foreground/75">Streaming worldwide on Amazon Prime Video and Fandango at Home. Set a reminder, gather the team, lock the door.</p>
         </div>
         <div className="grid gap-3">
-          {[
-            { name: "Amazon Prime Video", note: "Stream", href: "https://www.amazon.com/" },
-            { name: "Fandango at Home", note: "Rent / Buy", href: "https://athome.fandango.com/" },
-            { name: "Instagram", note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
-          ].map((p) => (
-            <a key={p.name} href={p.href} target="_blank" rel="noreferrer"
-               className="flex items-center justify-between border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40 rounded-2xl">
-              <div>
-                <div className="font-display text-2xl">{p.name}</div>
-                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">{p.note}</div>
+          {platforms.map((p, i) => (
+            <a key={i} href={p.href} target="_blank" rel="noreferrer"
+               className="flex items-center justify-between gap-4 border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40 rounded-2xl">
+              <div className="min-w-0">
+                <div className="text-foreground">{p.logo}</div>
+                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-2">{p.note}</div>
               </div>
-              <span className="text-primary group-hover:translate-x-1 transition">→</span>
+              <span className="text-primary group-hover:translate-x-1 transition shrink-0">→</span>
             </a>
           ))}
         </div>
@@ -312,7 +338,7 @@ function Footer() {
   return (
     <footer className="px-6 lg:px-12 py-12 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-6 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-        <div className="font-display text-2xl tracking-wider text-foreground">SWORD<span className="text-primary">PLAY</span></div>
+        <img src={swordplayLogo} alt="Swordplay" className="h-6 w-auto" />
         <div>© 2026 Buffalo 8 / BondIt Media Capital. All rights reserved.</div>
         <div className="flex gap-5">
           <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
