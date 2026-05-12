@@ -274,7 +274,41 @@ function Cast() {
   );
 }
 
+function PrimeLogo() {
+  return (
+    <svg viewBox="0 0 200 48" className="h-7 md:h-8 w-auto" aria-label="Amazon Prime Video">
+      <text x="0" y="22" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" fontSize="20" letterSpacing="-0.5">prime</text>
+      <text x="62" y="22" fill="#1399FF" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" fontSize="20" letterSpacing="-0.5">video</text>
+      <path d="M2 30 Q 60 44 122 30" stroke="#FF9900" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M115 26 L 124 30 L 115 34" stroke="#FF9900" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function FandangoLogo() {
+  return (
+    <svg viewBox="0 0 220 48" className="h-7 md:h-8 w-auto" aria-label="Fandango at Home">
+      <text x="0" y="24" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontWeight="800" fontSize="22" letterSpacing="-0.5">fandango</text>
+      <text x="0" y="42" fill="#FF7300" fontFamily="Inter, system-ui, sans-serif" fontWeight="600" fontSize="11" letterSpacing="2">AT HOME</text>
+    </svg>
+  );
+}
+
+function InstaLogo() {
+  return (
+    <div className="flex items-center gap-3">
+      <Instagram className="w-7 h-7" strokeWidth={1.75} />
+      <span className="font-display text-2xl">Instagram</span>
+    </div>
+  );
+}
+
 function Watch() {
+  const platforms = [
+    { logo: <PrimeLogo />, note: "Stream worldwide", href: "https://www.amazon.com/" },
+    { logo: <FandangoLogo />, note: "Rent / Buy", href: "https://athome.fandango.com/" },
+    { logo: <InstaLogo />, note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
+  ];
   return (
     <section id="watch" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -284,18 +318,14 @@ function Watch() {
           <p className="mt-6 max-w-md text-foreground/75">Streaming worldwide on Amazon Prime Video and Fandango at Home. Set a reminder, gather the team, lock the door.</p>
         </div>
         <div className="grid gap-3">
-          {[
-            { name: "Amazon Prime Video", note: "Stream", href: "https://www.amazon.com/" },
-            { name: "Fandango at Home", note: "Rent / Buy", href: "https://athome.fandango.com/" },
-            { name: "Instagram", note: "@swordplayfilm — follow for updates", href: "https://www.instagram.com/swordplayfilm/" },
-          ].map((p) => (
-            <a key={p.name} href={p.href} target="_blank" rel="noreferrer"
-               className="flex items-center justify-between border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40 rounded-2xl">
-              <div>
-                <div className="font-display text-2xl">{p.name}</div>
-                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-1">{p.note}</div>
+          {platforms.map((p, i) => (
+            <a key={i} href={p.href} target="_blank" rel="noreferrer"
+               className="flex items-center justify-between gap-4 border border-border/70 hover:border-primary px-6 py-5 group transition bg-card/40 rounded-2xl">
+              <div className="min-w-0">
+                <div className="text-foreground">{p.logo}</div>
+                <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mt-2">{p.note}</div>
               </div>
-              <span className="text-primary group-hover:translate-x-1 transition">→</span>
+              <span className="text-primary group-hover:translate-x-1 transition shrink-0">→</span>
             </a>
           ))}
         </div>
@@ -308,7 +338,7 @@ function Footer() {
   return (
     <footer className="px-6 lg:px-12 py-12 border-t border-border/60">
       <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-6 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-        <div className="font-display text-2xl tracking-wider text-foreground">SWORD<span className="text-primary">PLAY</span></div>
+        <img src={swordplayLogo} alt="Swordplay" className="h-6 w-auto" />
         <div>© 2026 Buffalo 8 / BondIt Media Capital. All rights reserved.</div>
         <div className="flex gap-5">
           <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer" className="hover:text-foreground">Instagram</a>
