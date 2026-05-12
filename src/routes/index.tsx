@@ -238,8 +238,6 @@ function Cast() {
     { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: stillPortrait },
     { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: simonHoward },
     { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen · UK Rap", img: backroadGee1 },
-    { name: "BackRoad Gee", role: "On set", credit: "Behind the scenes", img: backroadGee2 },
-    { name: "BackRoad Gee", role: "In character", credit: "Press shoot", img: backroadGee3 },
   ];
   const autoplay = useRef(Autoplay({ delay: 4500, stopOnInteraction: false, stopOnMouseEnter: true }));
   return (
