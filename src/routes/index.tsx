@@ -16,6 +16,7 @@ import stillBts from "@/assets/still-bts.jpg";
 import stillDuo from "@/assets/still-duo.jpg";
 import simonHoward from "@/assets/cast/simon-howard.jpg";
 import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
+import peterSilva from "@/assets/cast/peter-silva.jpg";
 import swordplayLogo from "@/assets/logos/swordplay-logo.png";
 import { Instagram } from "lucide-react";
 
@@ -88,7 +89,7 @@ function Hero() {
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-6">A Femi Wilhelm Film</p>
           <h1 className="sr-only">Swordplay</h1>
-          <img src={swordplayLogo} alt="Swordplay" className="w-full max-w-[900px] h-auto select-none" draggable={false} />
+          <img src={swordplayLogo} alt="Swordplay" className="w-full max-w-[900px] h-auto select-none brightness-0 invert" draggable={false} />
           <p className="mt-6 max-w-xl text-base md:text-lg text-foreground/80">
             Two best friends. One Deptford backstreet. Loyalty, jealousy, and the kind of betrayal Shakespeare wrote about.
           </p>
@@ -233,7 +234,7 @@ function Trailer() {
 
 function Cast() {
   const cast = [
-    { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: stillPortrait },
+    { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: peterSilva },
     { name: "Simon Howard", role: "Kid", credit: "Attack the Block", img: simonHoward },
     { name: "BackRoad Gee", role: "Featured", credit: "The Kitchen · UK Rap", img: backroadGee1 },
   ];
