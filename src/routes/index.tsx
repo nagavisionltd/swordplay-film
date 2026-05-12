@@ -16,8 +16,8 @@ import stillBts from "@/assets/still-bts.jpg";
 import stillDuo from "@/assets/still-duo.jpg";
 import simonHoward from "@/assets/cast/simon-howard.jpg";
 import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
-import backroadGee2 from "@/assets/cast/backroad-gee-2.jpg";
-import backroadGee3 from "@/assets/cast/backroad-gee-3.jpg";
+import swordplayLogo from "@/assets/logos/swordplay-logo.png";
+import { Instagram } from "lucide-react";
 
 export const Route = createFileRoute("/")({ component: Index });
 
