@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import { useEffect, useRef } from 'react';
 import FilmHero from "@/components/FilmHero";
@@ -35,6 +37,9 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 p-10 flex justify-between items-center pointer-events-none">
         <h2 className="text-white font-black text-xl tracking-[0.2em] mix-blend-difference pointer-events-auto">SWORDPLAY</h2>
         <div className="flex gap-10 pointer-events-auto">
+            <a href="#story" className="text-white/30 hover:text-accent font-black text-[10px] tracking-widest uppercase transition-all">Story</a>
+            <a href="/music" className="text-white/30 hover:text-accent font-black text-[10px] tracking-widest uppercase transition-all">Music</a>
+            <a href="/shop" className="text-white/30 hover:text-accent font-black text-[10px] tracking-widest uppercase transition-all">Shop</a>
             <a href="https://www.instagram.com/swordplayfilm" target="_blank" className="text-white/30 hover:text-accent font-black text-[10px] tracking-widest uppercase transition-all">Instagram</a>
         </div>
       </nav>
@@ -50,7 +55,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center gap-4">
               <Link href="/shop" className="flex items-center justify-center w-24 h-24 bg-white/10 rounded-full hover:bg-white/20 transition duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="text-whiteh-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.2 3.8a3 3 0 000 4.1l2.2 2.1z"/>
                 </svg>
                 <span className="mt-2 text-xs font-medium text-white">Shop</span>
