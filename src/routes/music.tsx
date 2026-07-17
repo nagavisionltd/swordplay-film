@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Music, Play } from "lucide-react";
+import { Music as MusicIcon, Play } from "lucide-react";
 import swordplayLogo from "@/assets/logos/swordplay-logo.png";
 
 export const Route = createFileRoute("/music")({ component: Music });
@@ -79,7 +79,7 @@ function MusicHero() {
             </p>
           </div>
           <div className="hidden lg:flex items-center justify-center w-40 h-40 rounded-2xl border border-primary/40 bg-primary/5">
-            <Music className="w-20 h-20 text-primary opacity-50" />
+            <MusicIcon className="w-20 h-20 text-primary opacity-50" />
           </div>
         </div>
       </div>
@@ -136,7 +136,7 @@ function AudioFeature() {
             <div className="space-y-4">
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Music className="w-6 h-6 text-primary" />
+                  <MusicIcon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Original Compositions</h4>
@@ -145,7 +145,7 @@ function AudioFeature() {
               </div>
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Music className="w-6 h-6 text-primary" />
+                  <MusicIcon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Street Artists</h4>
@@ -154,7 +154,7 @@ function AudioFeature() {
               </div>
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Music className="w-6 h-6 text-primary" />
+                  <MusicIcon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Cultural Authenticity</h4>
@@ -165,7 +165,7 @@ function AudioFeature() {
           </div>
           <div className="relative">
             <div className="aspect-square rounded-2xl border-2 border-primary/30 bg-primary/5 flex items-center justify-center overflow-hidden">
-              <Music className="w-32 h-32 text-primary opacity-30" />
+              <MusicIcon className="w-32 h-32 text-primary opacity-30" />
             </div>
             <div className="absolute -bottom-6 -right-6 w-48 h-48 rounded-full border border-primary/20 opacity-50" />
           </div>
