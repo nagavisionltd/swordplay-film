@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Music as MusicIcon, Play } from "lucide-react";
 import swordplayLogo from "@/assets/logos/swordplay-logo.png";
 
-export const Route = createFileRoute("/music")({ component: Music });
+export const Route = createFileRoute("/music")({ component: MusicPage });
 
 const musicPlatforms = [
   {
@@ -213,7 +213,7 @@ function MusicFooter() {
   );
 }
 
-function Music() {
+function MusicPage() {
   return (
     <main className="relative">
       <Nav />
