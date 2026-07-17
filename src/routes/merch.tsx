@@ -92,7 +92,7 @@ function MerchGrid() {
                 </div>
                 {selected === item.id && (
                   <div className="mt-4 pt-4 border-t border-border/40">
-                    <p className="text-xs text-muted-foreground mb-4">Coming soon</p>
+                    <p className="text-xs text-muted-foreground mb-4">Out now</p>
                     <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer"
                        className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-primary border-b border-primary pb-1 hover:opacity-75 transition">
                       DM for inquiries →

@@ -18,28 +18,15 @@ import simonHoward from "@/assets/cast/simon-howard.jpg";
 import backroadGee1 from "@/assets/cast/backroad-gee-1.jpg";
 import peterSilva from "@/assets/cast/peter-silva.jpg";
 import swordplayLogo from "@/assets/logos/swordplay-logo.png";
+import merchCap from "@/assets/swordplay_image_gallery/merch/Swordplay-caps.jpg";
+import merchTshirtOne from "@/assets/swordplay_image_gallery/merch/Swordplay-tshirt-1.jpg";
+import merchTshirtTwo from "@/assets/swordplay_image_gallery/merch/Swordplay-tshirt-2.jpg";
+import soundtrackOst from "@/assets/swordplay_image_gallery/soundtrack/IMG-20260703-WA0014(1).jpg";
 import { Instagram } from "lucide-react";
 
 export const Route = createFileRoute("/")({ component: Index });
 
 const VIDEO_ID = "jJRNTFBZPOw";
-const RELEASE = new Date("2026-06-19T00:00:00Z");
-
-function useCountdown() {
-  const [now, setNow] = useState<number | null>(null);
-  useEffect(() => {
-    setNow(Date.now());
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  if (now === null) return { d: 0, h: 0, m: 0, s: 0, ready: false };
-  const diff = Math.max(0, RELEASE.getTime() - now);
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff / 3600000) % 24);
-  const m = Math.floor((diff / 60000) % 60);
-  const s = Math.floor((diff / 1000) % 60);
-  return { d, h, m, s, ready: true };
-}
 
 function Nav() {
   return (
@@ -49,10 +36,11 @@ function Nav() {
           <img src={swordplayLogo} alt="Swordplay" className="h-6 md:h-7 w-auto" />
         </a>
         <nav className="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          <a href="#trailer" className="hover:text-foreground transition">Trailer</a>
           <a href="#story" className="hover:text-foreground transition">Story</a>
           <a href="#cast" className="hover:text-foreground transition">Cast</a>
-          <a href="#watch" className="hover:text-foreground transition">Watch</a>
+          <a href="#merch" className="hover:text-foreground transition">Merch</a>
+      <a href="#music" className="hover:text-foreground transition">Music</a>
+      <a href="#watch" className="hover:text-foreground transition">Watch</a>
         </nav>
         <a href="https://www.instagram.com/swordplayfilm/" target="_blank" rel="noreferrer"
            className="text-xs uppercase tracking-[0.2em] border border-foreground/30 px-4 py-2 hover:bg-foreground hover:text-background transition rounded-full">
@@ -64,7 +52,6 @@ function Nav() {
 }
 
 function Hero() {
-  const { d, h, m, s, ready } = useCountdown();
   return (
     <section id="top" className="relative h-[100svh] w-full overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -83,9 +70,9 @@ function Hero() {
       <div className="relative z-10 h-full flex flex-col justify-between max-w-[1600px] mx-auto px-6 lg:px-12 pt-28 pb-14 md:pb-20">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span>Coming to</span>
+          <span>Out now</span>
           <PrimeLogo />
-          <span>— June 19, 2026</span>
+          <span>— streaming worldwide</span>
         </div>
 
         <div>
@@ -108,25 +95,9 @@ function Hero() {
           </div>
         </div>
 
-        {/* Countdown — given its own breathing room */}
-        <div className="mt-10 md:mt-16">
-          <div className="flex flex-wrap items-end justify-between gap-8">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4">Counting down to release</p>
-              <div className="flex gap-6 md:gap-10 font-display">
-                {[{l:"Days",v:d},{l:"Hrs",v:h},{l:"Min",v:m},{l:"Sec",v:s}].map(({l,v}) => (
-                  <div key={l} className="text-center">
-                    <div className="text-4xl md:text-6xl tabular-nums leading-none">
-                      {ready ? String(v).padStart(2,"0") : "--"}
-                    </div>
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-3">{l}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground hidden md:block pb-2">
-              Scroll ↓
-            </div>
+        <div className="mt-10 md:mt-16 flex items-end justify-between gap-8">
+          <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+            Scroll ↓
           </div>
         </div>
       </div>
@@ -212,28 +183,6 @@ function BentoGrid() {
   );
 }
 
-function Trailer() {
-  return (
-    <section id="trailer" className="relative px-4 sm:px-6 lg:px-12 py-20 md:py-24 border-t border-border/60">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
-          <h2 className="font-display text-5xl md:text-7xl leading-none">Official trailer</h2>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">01:27 · 4K</p>
-        </div>
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-black">
-          <iframe
-            className="absolute inset-0 w-full h-full"
-            src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?rel=0&modestbranding=1&playsinline=1`}
-            title="Swordplay Volume One — Official Trailer"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Cast() {
   const cast = [
     { name: "Peter Silva", role: "Ringo", credit: "Lead · Tapped (2026)", img: peterSilva },
@@ -272,6 +221,177 @@ function Cast() {
             <CarouselNext className="right-2 bg-background/80 border-border" />
           </div>
         </Carousel>
+      </div>
+    </section>
+  );
+}
+
+function Merchandise() {
+  const products = [
+    {
+      name: "Swordplay Snapback",
+      description: "Embroidered cap with the film's signature mark.",
+      image: merchCap,
+      price: "£20",
+      details: "One-size-fits-most, structured crown, and a subtle tonal logo finish.",
+      sizes: "One size",
+      link: "https://www.paypal.com/paypalme/",
+    },
+    {
+      name: "Swordplay T-shirt",
+      description: "Heavyweight tee inspired by the streets of the film.",
+      image: merchTshirtOne,
+      price: "£28",
+      details: "Premium cotton tee with a clean front print and a rugged, worn-in feel.",
+      sizes: "S · M · L · XL",
+      link: "https://www.paypal.com/paypalme/",
+    },
+    {
+      name: "Swordplay Unisex T-shirt",
+      description: "A second drop with the raw, monochrome look of the poster art.",
+      image: merchTshirtTwo,
+      price: "£30",
+      details: "Limited-run tee featuring a bold graphic treatment and soft-touch fabric.",
+      sizes: "S · M · L · XL",
+      link: "https://www.paypal.com/paypalme/",
+    },
+  ];
+  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
+
+  useEffect(() => {
+    if (!selectedProduct) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedProduct(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedProduct]);
+
+  return (
+    <section id="merch" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
+      <div className="max-w-[1600px] mx-auto">
+        <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Merch</p>
+            <h2 className="font-display text-5xl md:text-7xl leading-none">Wear the story.</h2>
+          </div>
+          <p className="max-w-md text-foreground/70">
+            Pick up official pieces inspired by the film's world, from caps to tees and statement pieces for the faithful.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <button
+              key={product.name}
+              type="button"
+              onClick={() => setSelectedProduct(product)}
+              className="w-full overflow-hidden rounded-2xl border border-border/60 bg-card text-left transition hover:border-primary/60"
+            >
+              <img src={product.image} alt={product.name} loading="lazy" className="h-72 w-full object-cover" />
+              <div className="p-6 md:p-8">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3">Out now</p>
+                <h3 className="font-display text-2xl md:text-3xl mb-3">{product.name}</h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">{product.description}</p>
+                <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-4">
+                  <span className="text-sm font-semibold text-foreground">{product.price}</span>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">View product</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {selectedProduct && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-background/95 p-4 backdrop-blur-sm sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setSelectedProduct(null)}
+        >
+          <div className="relative w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => setSelectedProduct(null)}
+              className="absolute right-3 top-3 z-10 rounded-full border border-border/60 bg-background/90 px-3 py-2 text-sm uppercase tracking-[0.25em] text-foreground transition hover:bg-background"
+            >
+              Close
+            </button>
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="max-h-[85vh] w-full rounded-2xl border border-border/60 object-contain shadow-2xl"
+            />
+            <div className="mt-5 rounded-2xl border border-border/60 bg-card/90 p-6 text-left shadow-xl">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-2">Merch</p>
+                  <h3 className="font-display text-3xl md:text-4xl">{selectedProduct.name}</h3>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-foreground">{selectedProduct.price}</p>
+                  <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Out now</p>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-foreground/75">{selectedProduct.details}</p>
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                <span className="rounded-full border border-border/60 px-3 py-1">{selectedProduct.sizes}</span>
+                <span className="rounded-full border border-border/60 px-3 py-1">Limited release</span>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href={selectedProduct.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-primary-foreground transition hover:bg-primary/90"
+                >
+                  Buy now
+                </a>
+                <a
+                  href={selectedProduct.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-full border border-foreground/30 px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-foreground transition hover:bg-foreground hover:text-background"
+                >
+                  Add to basket
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function MusicSection() {
+  return (
+    <section id="music" className="px-4 sm:px-6 lg:px-12 py-20 md:py-28 border-t border-border/60">
+      <div className="max-w-[1600px] mx-auto">
+        <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Music</p>
+            <h2 className="font-display text-5xl md:text-7xl leading-none">The original soundtrack.</h2>
+          </div>
+          <p className="max-w-md text-foreground/70">
+            The Swordplay OST brings the film's tension, pulse, and atmosphere into one release.
+          </p>
+        </div>
+
+        <article className="overflow-hidden rounded-2xl border border-border/60 bg-card lg:grid lg:grid-cols-[1.1fr_0.9fr]">
+          <img src={soundtrackOst} alt="Swordplay original soundtrack" loading="lazy" className="h-80 lg:h-full w-full object-cover" />
+          <div className="p-8 md:p-10 flex flex-col justify-center">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3">Out now</p>
+            <h3 className="font-display text-3xl md:text-4xl mb-4">Swordplay OST</h3>
+            <p className="text-foreground/70 leading-relaxed mb-6">
+              A modern, gritty soundtrack shaped by the film's South London roots, designed to echo the same tension and emotion on the screen.
+            </p>
+            <div className="inline-flex w-fit items-center gap-2 border border-foreground/30 px-5 py-3 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-foreground hover:text-background transition rounded-full">
+              Listen now
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   );
@@ -359,8 +479,9 @@ function Index() {
       <Hero />
       <Marquee />
       <BentoGrid />
-      <Trailer />
       <Cast />
+      <Merchandise />
+      <MusicSection />
       <Watch />
       <Footer />
     </main>
